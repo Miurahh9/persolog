@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Logbook</title>
+<meta name="description" content="A simple personal logbook for offline use">
+<meta name="theme-color" content="#000000">
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/icons/icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-title" content="Logbook">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<a class="skip-link" href="#log-form">Skip to add entry form</a>
+
+<header>
+  <h1>Logbook</h1>
+  <p id="today" class="today" aria-live="polite"></p>
+</header>
+
+<main>
+  <section aria-labelledby="add-heading">
+    <h2 id="add-heading">Add a log entry</h2>
+    <form id="log-form">
+      <fieldset class="time-of-day-field">
+        <legend>Time of day</legend>
+        <div class="segmented" id="time-of-day-group" role="group" aria-label="Time of day">
+          <button type="button" class="segment" data-time="morning" aria-pressed="false">Morning</button>
+          <button type="button" class="segment" data-time="noon" aria-pressed="false">Noon</button>
+          <button type="button" class="segment" data-time="evening" aria-pressed="false">Evening</button>
+          <button type="button" class="segment" data-time="night" aria-pressed="false">Night</button>
+        </div>
+        <p id="time-of-day-hint" class="time-of-day-hint">Suggested automatically based on the current time — tap an option to change it.</p>
+      </fieldset>
+
+      <label for="entry-text">Entry</label>
+      <textarea
+        id="entry-text"
+        name="entry-text"
+        rows="4"
+        required
+        aria-required="true"
+        placeholder="Write what happened today..."
+      ></textarea>
+      <button type="submit">Add entry</button>
+    </form>
+    <p id="form-status" role="status" aria-live="polite" class="visually-hidden"></p>
+  </section>
+
+  <section aria-labelledby="entries-heading">
+    <h2 id="entries-heading">Entries</h2>
+
+    <div class="filter-bar" id="filter-bar" role="group" aria-label="Filter entries by time of day">
+      <button type="button" class="filter-chip" data-filter="all" aria-pressed="true">All</button>
+      <button type="button" class="filter-chip" data-filter="morning" aria-pressed="false">Morning</button>
+      <button type="button" class="filter-chip" data-filter="noon" aria-pressed="false">Noon</button>
+      <button type="button" class="filter-chip" data-filter="evening" aria-pressed="false">Evening</button>
+      <button type="button" class="filter-chip" data-filter="night" aria-pressed="false">Night</button>
+    </div>
+
+    <p id="empty-message" class="empty-message">No entries yet. Add your first one above.</p>
+    <ul id="entries-list" aria-label="Log entries"></ul>
+  </section>
+
+  <details class="backup-section">
+    <summary>Time-of-day settings</summary>
+    <form id="ranges-form" class="ranges-form">
+      <p class="ranges-intro">Set when each period starts. Each one runs until the next starts.</p>
+
+      <div class="ranges-grid">
+        <label for="range-morning">Morning starts</label>
+        <input type="time" id="range-morning" name="range-morning" required>
+
+        <label for="range-noon">Noon starts</label>
+        <input type="time" id="range-noon" name="range-noon" required>
+
+        <label for="range-evening">Evening starts</label>
+        <input type="time" id="range-evening" name="range-evening" required>
+
+        <label for="range-night">Night starts</label>
+        <input type="time" id="range-night" name="range-night" required>
+      </div>
+
+      <div class="ranges-actions">
+        <button type="submit">Save times</button>
+        <button type="button" id="ranges-reset-btn">Reset to defaults</button>
+      </div>
+    </form>
+    <p id="ranges-status" role="status" aria-live="polite" class="visually-hidden"></p>
+  </details>
+
+  <details class="backup-section">
+    <summary>Backup &amp; data</summary>
+    <div class="tools">
+      <button type="button" id="export-btn">Export logs</button>
+      <label class="file-label" for="import-input">Import logs
+        <input type="file" id="import-input" accept="application/json" />
+      </label>
+      <button type="button" id="clear-btn" class="danger">Clear all logs</button>
+    </div>
+    <p id="tools-status" role="status" aria-live="polite" class="visually-hidden"></p>
+  </details>
+</main>
+
+<footer>
+  <p>All entries are stored only on this device. Nothing is sent anywhere.</p>
+</footer>
+
+<script src="/app.js"></script>
+</body>
+</html>
